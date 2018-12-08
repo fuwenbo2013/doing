@@ -10,5 +10,7 @@ public interface RoleMapper {
 	public int addRole(Role role);
 	//根据ID更新role表
 	public void updateRole(Role role);
+	//根据id删除角色
+	public void delRole(String id);
 }
 

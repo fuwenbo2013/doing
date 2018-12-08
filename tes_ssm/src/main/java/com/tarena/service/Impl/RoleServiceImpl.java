@@ -64,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
 		Result result=new Result();
 		result.setData(page);
 		result.setStatus(1);	
-		System.out.println(result);
+		
 		return result;
 	}
 	@Override
@@ -84,6 +84,12 @@ public class RoleServiceImpl implements RoleService {
 		Result result=new Result();
 		result.setStatus(1);
 		return result;
+	}
+	@Override
+	public Result delRole(String id) {
+		Result result=new Result();
+		roleMapper.delRole(id);
+		return null;
 	}
 
 }

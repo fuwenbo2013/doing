@@ -11,6 +11,8 @@ public interface RoleService {
 	Result addRole(Role role);
 	//更新角色名
 	Result updateRoleName(Role role);
+	//删除角色
+	Result delRole(String id);
 	
 
 }

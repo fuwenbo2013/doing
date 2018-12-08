@@ -34,10 +34,16 @@
 	</insert>
 	<!--更新角色表 -->
 	<update id="updateRole" parameterType="Role">
-
 		update t_role set
-		role_name=${name} 
-		where role_id=${id}
-
+		role_name=#{name} 
+		where role_id=#{id}
 	</update>
+	
+	<!--删除角色  -->
+	<delete id="delRole" parameterType="java.lang.String">
+	delete from  t_role where role_id=#{id}	
+	</delete>
+	
+	
+	
 </mapper>
