@@ -23,12 +23,21 @@
 		from t_role
 		where role_name like
 		#{roleKW}
-		limit #{begin},#{pageSize}
+		limit
+		#{begin},#{pageSize}
 	</select>
 
 	<!-- 新增角色 -->
 	<insert id="addRole" parameterType="Role">
-		insert into t_role values(#{id},#{name})
+		insert into t_role
+		values(#{id},#{name})
 	</insert>
+	<!--更新角色表 -->
+	<update id="updateRole" parameterType="Role">
 
+		update t_role set
+		role_name=${name} 
+		where role_id=${id}
+
+	</update>
 </mapper>

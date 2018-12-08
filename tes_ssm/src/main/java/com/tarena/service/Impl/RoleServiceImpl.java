@@ -78,5 +78,12 @@ public class RoleServiceImpl implements RoleService {
 
 		return result;
 	}
+	@Override
+	public Result updateRoleName(Role role) {
+		roleMapper.updateRole(role);
+		Result result=new Result();
+		result.setStatus(1);
+		return result;
+	}
 
 }

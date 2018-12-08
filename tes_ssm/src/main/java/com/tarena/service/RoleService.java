@@ -9,6 +9,8 @@ public interface RoleService {
 	Result findRoleByPage(Page page);
     //新增角色
 	Result addRole(Role role);
+	//更新角色名
+	Result updateRoleName(Role role);
 	
 
 }

@@ -30,13 +30,19 @@ public class RoleController {
 	@RequestMapping(value="addRole",method=RequestMethod.POST)
 	@ResponseBody
 	public Result addRole(Role role) {
-		System.out.println("-------");
+		
 		Result 	result=roleService.addRole(role);		
-		System.out.println(result);		
+				
 		return result;		
 	}
 	
-	
-	
+	@RequestMapping(value="updateRole",method=RequestMethod.POST)
+	@ResponseBody
+	public Result updateRoleName(Role role) {
+		System.out.println("---gggggg---");
+		Result 	result=roleService.updateRoleName(role);		
+		System.out.println(result);		
+		return result;		
+	}
 	
 }

@@ -1,4 +1,8 @@
 //@ sourceURL=role.js
+var roleId;
+var roleName;
+
+
 $(function() {
 	//sidebar上的超链接点击后的默认展示的页面
 	findRoleByPage(1);
@@ -15,15 +19,59 @@ $(function() {
 	
 	//编辑角色名
 	
-	//模态框获取对应的角色名
-	$()
-	
-	$("#editRole button[type=submit]").click(function() {
+	//模态框获取对应的角色名	
+	$("#editRole button[type=submit]").click(function() {		
+		var roleName=$("#updateRoleName").val();
+		//编辑框为空时
+		alert(roleName);
 		
+		if (!roleName) {
+			alert("请填上角色名");
+			
+			}
+		//将角色名更新至数据库
+		updateRoleName(roleId,roleName);		
 	})
 	//删除角色
 })
+//更新角色名
+function updateRoleName(roleId,roleName) {
+	
+	$.ajax({
+		url:basePath+"role/updateRole",		
+		dataType:"json",
+		type:"post",
+		data:{
+			"id":roleId,
+			"name":RoleName
+		},
+		success:function(result){
+			if (result.status==1) {
+				
+				$("#tr"+roleId+"  td:eq(2)").val(roleName);
+				window.location.href="role.html";
+			}else {
+				alert("角色更新失败");
+			}
+		},
+		error:function(){
+			alert("更新请求失败");			
+		}
+		
+	})
+	return false;
+	
+	
+}
 
+//角色编辑链接点击获取角色id 角色名
+function getRoleId(id,name) {	
+	roleId=id;
+	roleNaem=name;
+	//给角色编辑框传送原角色名
+	$("#updateRoleName").val(name);
+	
+}
 //页面展示函数
 function findRoleByPage(currentPage) {
 	//搜索role关键字
@@ -34,6 +82,7 @@ function findRoleByPage(currentPage) {
 
 	$.ajax({
 		url:basePath+"role/findRoleByPage",
+		
 		type:"get",
 		data:{
 			"currentPage":currentPage,
@@ -62,12 +111,12 @@ function findRoleByPage(currentPage) {
 
 					$("#rolePanel tbody").append(tr1);
 				}else {
-					var tr2='<tr>'+
+					var tr2='<tr id="tr'+role.id+'">'+
 					'<td>'+(index+1)+'</td>'+
 					'<td>'+role.id+'</td>'+
 					'<td>'+role.name+'</td>'+
 					'<td>'+
-					'<a    href="" onclick="updateRole(\''+role.id+'\',\''+role.name+'\')"  data-toggle="modal" data-target="#editRole" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>'+
+					'<a    href="" onclick="getRoleId(\''+role.id+'\',\''+role.name+'\')"   data-toggle="modal" data-target="#editRole" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>'+
 					'<a    href="" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</a>'+
 					'</td>'+
 					'</tr>';  

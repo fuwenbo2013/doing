@@ -8,5 +8,7 @@ public interface RoleMapper {
 	public int getCount(String roleKW);
 	public  List<Role> getRoles(Page page);	
 	public int addRole(Role role);
+	//根据ID更新role表
+	public void updateRole(Role role);
 }
 
