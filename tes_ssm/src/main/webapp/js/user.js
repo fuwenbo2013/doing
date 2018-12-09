@@ -1,33 +1,71 @@
 //@ sourceURL=user.js
 
 $(function(){
-	console.log("load user");
+	//第一次点击导航栏用户模块时触发
+	listUserByPage(1);	
+	//
+	$("#userPanel input:eq(0)").keydown(function(event){
+		alert("sssss");
+		if (event.which==13) {
+			var userKW=$("#userPanel").find("input").eq(0).val();
+			alert("8888");			
+		}
+	})
 	
-	$('[data-toggle="popover"]').popover();
 	
-	/**
-	  $("#chk_all_t").click(function() {
-	  	if ($(":checkbox").prop("checked")){
-		    $("#chk_list_1").prop("checked",true);
-		    $("#chk_list_2").prop("checked",true);
-		    $("#chk_list_3").prop("checked",true);
-		    $("#chk_list_4").prop("checked",true);
-	    }
-	  	else{
-	        $("#chk_list_1").removeAttr("checked");
-	        $("#chk_list_2").removeAttr("checked");
-	        $("#chk_list_3").removeAttr("checked");
-	        $("#chk_list_4").removeAttr("checked");
-	    }
-	  });
-	*/
-	
-	$(".glyphicon-import").click(function(){
-		import_user();
-	});
-	
-});
+})
 
-function import_user() {
-	$("#import_user").trigger("click");
+//根据模糊关键字和当前页展示用户信息
+function listUserByPage(currentPage) {
+	
+	var userKW=$("#userPanel input:eq(0)").val();
+	alert(userKW);
+	
+	//发送异步请求获取列表信息
+	
+	$.ajax({
+		url:basepath+"user/listUserByPage",
+		type:"get",
+		dataType:"json",
+		data:{
+			"userKW":userKW,
+			"currentPage":currentPage
+			
+		},		
+		success:function(result){
+			var users=result.data;			
+			$(users).each(function(index,user){
+				//put the user details into list
+				
+				var roleString=user.roles;
+				//clear the user tbody
+				$("#userPanel table tbody").html("");
+				
+				var tr=
+				`<tr>
+                <td>${index+1}</td>
+                <td>${user.loginName}</td>
+                <td>${user.nickName}</td>
+                <td>${user.type}</td>
+                <td>${user.score}</td>
+                <td>${user.regDate}</td>
+                <td>${user.isLock}</td>
+                <td>${user.roles}</td>
+                <td>
+                  <a href="" data-toggle="modal" data-target="#editUser"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>
+                  <a href="" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</a>
+                </td>
+              </tr>`
+					
+					
+				
+			})
+			
+			
+		},
+		error:function(){
+			alert("list user request failure!");
+		}
+		
+	})
 }

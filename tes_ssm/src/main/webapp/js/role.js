@@ -5,6 +5,11 @@ var roleName;
 $(function() {
 	//sidebar上的超链接点击后的默认展示的页面
 	findRoleByPage(1);
+	
+	//给角色的按钮添加事件
+	$("#sidebar ul li:eq(0)").click(function(){
+		findRoleByPage(1);
+	})
 
 	//新增角色
 	$("#addPanel button[type=submit]").click(function() {
